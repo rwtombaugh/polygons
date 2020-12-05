@@ -1,4 +1,5 @@
-#ifndef Point_t
+#ifndef Point_H
+#define Point_H
 
 //
 // --- Public Types ---

@@ -1,6 +1,7 @@
 #include <stdint.h>
 
-#ifndef Pixel_t
+#ifndef Pixel_H
+#define Pixel_H
 
 //
 // --- Public Types ---

@@ -1,6 +1,7 @@
 #include "./Pixel.h"
 
-#ifndef Color_t
+#ifndef Color_H
+#define Color_H
 
 //
 // --- Public Types ---
