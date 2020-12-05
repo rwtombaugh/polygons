@@ -1,6 +1,7 @@
 #include "./Point.h"
 
-#ifndef PointList_t
+#ifndef PointList_H
+#define PointList_H
 
 //
 // --- Public Types ---
