@@ -85,7 +85,7 @@ void PointListAddCoords(PointList_t* list, int x, int y)
   }  
 }
 
-void PointListAddPoint(PointList_t* list, Point_t point)
+void PointListAddPoint(PointList_t* list, Point_t* point)
 {
-  PointListAddCoords(list, point.x, point.y);
+  PointListAddCoords(list, point->x, point->y);
 }

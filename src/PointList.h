@@ -18,7 +18,7 @@ void PointListDestroy(PointList_t** list);
 
 int PointListSize(PointList_t* list);
 
-void PointListAddPoint(PointList_t* list, Point_t point);
+void PointListAddPoint(PointList_t* list, Point_t* point);
 void PointListAddCoords(PointList_t* list, int x, int y);
 
 Point_t PointListGetAtIndex(PointList_t* list, int index);
