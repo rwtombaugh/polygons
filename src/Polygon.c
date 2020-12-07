@@ -82,7 +82,19 @@ Polygon_t* PolygonCreatePentagon(int32_t radius, Color_t* color)
 
 Polygon_t* PolygonCreateHexagon(int32_t radius, Color_t* color)
 {
-  return NULL;
+  int c = radius;
+  int a = (sqrt3 * c)/2;
+  int b = c/2;
+
+  PointList_t* points = PointListCreate();
+  PointListAddCoords(points, a, 0);
+  PointListAddCoords(points, 2 * a, b);
+  PointListAddCoords(points, 2 * a, c + b);
+  PointListAddCoords(points, a, 2 * c );
+  PointListAddCoords(points, 0, c + b);
+  PointListAddCoords(points, 0, b);
+
+  return PolygonCreate(points, PointCreate(a, c), color);
 }
 
 void PolygonDestroy(Polygon_t** polygon)
