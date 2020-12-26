@@ -1,3 +1,6 @@
+#include <stdio.h>
+#include <stdint.h>
+#include <stdbool.h>
 #include <stdlib.h>
 #include "./Point.h"
 
@@ -17,7 +20,7 @@ typedef struct PointNode_s {
 typedef struct {
   PointNode_t* head;
   PointNode_t* tail;
-  int size;
+  int32_t size;
 } PointList_t;
 
 //
@@ -63,12 +66,12 @@ void PointListDestroy(PointList_t** list)
   *list = NULL;
 }
 
-int PointListSize(PointList_t* list)
+int32_t PointListSize(PointList_t* list)
 {
   return list->size;
 }
 
-void PointListAddCoords(PointList_t* list, int x, int y)
+void PointListAddCoords(PointList_t* list, int32_t x, int32_t y)
 {
   PointNode_t* node = PointNodeCreate(x, y);
   if (list->head == NULL)
@@ -88,4 +91,67 @@ void PointListAddCoords(PointList_t* list, int x, int y)
 void PointListAddPoint(PointList_t* list, Point_t* point)
 {
   PointListAddCoords(list, point->x, point->y);
+}
+
+bool PointListHasCoords(PointList_t* list, int32_t x, int32_t y)
+{
+  PointNode_t* node = list->head;
+  while (node != NULL)
+  {
+    if (node->value.x == x && node->value.y == y)
+    {
+      return true;
+    }
+    node = node->next;
+  }
+
+  return false;
+}
+
+bool PointListHasPoint(PointList_t* list, Point_t* point)
+{
+  return PointListHasCoords(list, point->x, point->y);
+}
+
+void PointListRemoveCoords(PointList_t* list, int32_t x, int32_t y)
+{
+  PointNode_t* node = list->head;
+  if (node != NULL)
+  {
+    if (node->value.x == x && node->value.y == y)
+    {
+      printf("\n[Removing A] X: %d, Y: %d\n\n", node->value.x, node->value.y);
+      list->head = node->next;
+      free(node);
+      list->size--; 
+      PointListRemoveCoords(list, x, y);
+      return;
+    }
+
+    while (node != NULL)
+    {
+      PointNode_t* next = node->next;
+      if (next != NULL)
+      {
+        if (next->value.x == x && next->value.y == y)
+        {
+          printf("\n[Removing B] X: %d, Y: %d\n\n", next->value.x, next->value.y);
+          if (next == list->tail)
+          {
+            list->tail = node;
+          }
+          node->next = next->next;
+          free(next);
+          list->size--;
+        }
+      }
+
+      node = node->next;
+    }
+  }
+}
+
+void PointListRemovePoint(PointList_t* list, Point_t* point)
+{
+  PointListRemoveCoords(list, point->x, point->y);
 }
