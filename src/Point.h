@@ -10,4 +10,10 @@ typedef struct {
   int y;
 } Point_t;
 
+// 
+// --- Public Functions ---
+//
+
+Point_t* PointCreate(int x, int y);
+
 #endif
