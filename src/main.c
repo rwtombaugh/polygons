@@ -1,53 +1,51 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 #include <SDL2/SDL.h>
-#include "./Debug.h"
+#include "./Game.h"
 
 int main(int argc, char* argv[])
 {
   if (SDL_Init(SDL_INIT_VIDEO) == 0) {
-    SDL_Window* window = NULL;
-    SDL_Renderer* renderer = NULL;
+    SDL_Window* window = SDL_CreateWindow(
+      "Polygons", 
+      SDL_WINDOWPOS_CENTERED, 
+      SDL_WINDOWPOS_CENTERED,
+      640,
+      480,
+      0);
 
-    if (SDL_CreateWindowAndRenderer(640, 480, 0, &window, &renderer) == 0) {
-        SDL_bool done = SDL_FALSE;
+    Game_t* game = GameCreate(window);
 
-        uint32_t pixelFormat = SDL_GetWindowPixelFormat(window);
+    GameInit(game);
 
-        SDL_Texture* texture = SDL_CreateTexture(renderer, pixelFormat, SDL_TEXTUREACCESS_STREAMING, 640, 480);
-
-        uint32_t* pixels = NULL;
-        int32_t pitch = 0;
-        SDL_LockTexture(texture, NULL, (void**)&pixels, &pitch);
-
-        pixels[0] = 0xFFFFFFFF;
-        pixels[1] = 0xFFFFFFFF;
-        pixels[2] = 0xFFFFFFFF;
-        pixels[3] = 0xFFFFFFFF;
-
-        SDL_UnlockTexture(texture);
-
-        SDL_RenderCopy(renderer, texture, NULL, NULL);
-        SDL_RenderPresent(renderer);
-
-        while (!done) {
-        SDL_Event event;
-        while (SDL_PollEvent(&event)) {
-            if (event.type == SDL_QUIT) {
-                done = SDL_TRUE;
-            }
-        }
+    bool done = false;
+    while (!done)
+    {
+      SDL_Event event;
+      while (SDL_PollEvent(&event)) 
+      {
+          if (event.type == SDL_QUIT) 
+          {
+            done = true;
+          }
+          else
+          {
+          // GameHandleEvent(game, event);
+          }
       }
     }
 
-    if (renderer) {
-      SDL_DestroyRenderer(renderer);
-    }
-    if (window) {
+    GameDestroy(&game);
+
+    if (window) 
+    {
         SDL_DestroyWindow(window);
     }
 
     SDL_Quit();
     return 0;
   }
+
+  return 1;
 }

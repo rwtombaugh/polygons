@@ -105,11 +105,6 @@ bool PointHashTableHasPoint(PointHashTable_t* table, Point_t* point)
   return PointHashTableHasCoords(table, point->x, point->y);
 }
 
-void PointHashTableRemovePoint(PointHashTable_t* table, Point_t* point)
-{
-  PointHashTableRemoveCoords(table, point->x, point->y); 
-}
-
 void PointHashTableRemoveCoords(PointHashTable_t* table, int32_t x, int32_t y)
 {
   int32_t index = GetHashTableIndex(x, y, table->tableSize);
@@ -122,3 +117,7 @@ void PointHashTableRemoveCoords(PointHashTable_t* table, int32_t x, int32_t y)
   }
 }
 
+void PointHashTableRemovePoint(PointHashTable_t* table, Point_t* point)
+{
+  PointHashTableRemoveCoords(table, point->x, point->y); 
+}
